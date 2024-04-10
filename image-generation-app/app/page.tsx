@@ -4,7 +4,6 @@ import {
   Message,
   // import as useAssistant:
   experimental_useAssistant as useAssistant,
-  useChat,
 } from "ai/react";
 
 import {
@@ -32,42 +31,6 @@ import { useState } from "react";
 export default function Chat() {
   const { status, messages, input, submitMessage, handleInputChange } =
     useAssistant({ api: "/api/assistant" });
-
-  // const {
-  //   messages,
-  //   input,
-  //   handleInputChange,
-  //   handleSubmit,
-  //   append,
-  //   isLoading,
-  // } = useChat();
-
-  // const genres = [
-  //   { emoji: "🧙", value: "Fantasy" },
-  //   { emoji: "🕵️", value: "Mystery" },
-  //   { emoji: "💑", value: "Romance" },
-  //   { emoji: "🚀", value: "Sci-Fi" },
-  // ];
-  // const tones = [
-  //   { emoji: "😊", value: "Happy" },
-  //   { emoji: "😢", value: "Sad" },
-  //   { emoji: "😏", value: "Sarcastic" },
-  //   { emoji: "😂", value: "Funny" },
-  // ];
-
-  // const [state, setState] = useState({
-  //   genre: "",
-  //   tone: "",
-  // });
-
-  // const handleChange = ({
-  //   target: { name, value },
-  // }: React.ChangeEvent<HTMLInputElement>) => {
-  //   setState({
-  //     ...state,
-  //     [name]: value,
-  //   });
-  // };
 
   return (
     <>
@@ -123,7 +86,6 @@ export default function Chat() {
                   </pre>
                 </>
               )}
-              <br />
               <br />
             </div>
           ))}

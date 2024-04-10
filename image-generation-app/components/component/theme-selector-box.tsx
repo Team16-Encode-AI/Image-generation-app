@@ -10,8 +10,20 @@ import {
   Card,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
 
 export function ThemeSelectorBox() {
+  const [theme, setTheme] = useState("");
+
+  // Function to handle radio input change
+  const handleThemeChange = (e) => {
+    setTheme(e.target.value);
+  };
+
+  useEffect(() => {
+    console.log(theme);
+  }, [theme]); // Log the updated value of theme whenever it changes
+
   return (
     <Card className="w-full max-w-lg mx-auto">
       <CardHeader className="flex flex-col items-center space-y-2">
@@ -21,19 +33,44 @@ export function ThemeSelectorBox() {
         </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
-        <div className="grid gap-4 md:grid-cols-2">
-          <Button className="w-full justify-start rounded-lg" variant="outline">
-            <span className="font-semibold">Classic</span>
-          </Button>
-          <Button className="w-full justify-start rounded-lg" variant="outline">
-            <span className="font-semibold">Surreal</span>
-          </Button>
-          <Button className="w-full justify-start rounded-lg" variant="outline">
-            <span className="font-semibold">Abstract</span>
-          </Button>
-          <Button className="w-full justify-start rounded-lg" variant="outline">
-            <span className="font-semibold">Impressionist</span>
-          </Button>
+        <div className=" grid gap-4 md:grid-cols-2" role="group">
+          <label
+            htmlFor="classic"
+            className="has-[:checked]:bg-indigo-50 has-[:checked]:text-indigo-900 w-full py-2 px-4  flex items-center  rounded-lg font-semibold border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 focus:bg-gray-200 "
+          >
+            Classic
+            <input
+              className="hidden checked:border-indigo-500"
+              id="classic"
+              type="radio"
+              name="radio"
+              value="classic"
+              onChange={handleThemeChange}
+            />
+          </label>
+
+          <label
+            htmlFor="surreal"
+            className="has-[:checked]:bg-indigo-50 has-[:checked]:text-indigo-900 w-full py-2 px-4  flex items-center  rounded-lg font-semibold border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 "
+          >
+            Surreal
+            <input
+              className="hidden checked:border-indigo-500"
+              id="surreal"
+              type="radio"
+              name="radio"
+              value="surreal"
+              onChange={handleThemeChange}
+            />
+          </label>
+
+          {/*           
+          <div className="w-full py-2 px-4  flex items-center  rounded-lg font-semibold border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 ">
+            Abstract
+          </div>
+          <div className="w-full py-2 px-4  flex items-center  rounded-lg font-semibold border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 ">
+            Impressionist
+          </div> */}
         </div>
         <Button type="submit" className="self-center">
           Compose Description
