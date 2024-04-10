@@ -32,6 +32,8 @@ export default function Chat() {
   const { status, messages, input, submitMessage, handleInputChange } =
     useAssistant({ api: "/api/assistant" });
 
+  const [theme, setTheme] = useState("");
+
   return (
     <>
       <main className="mx-auto w-full p-24 flex flex-row">
@@ -61,7 +63,7 @@ export default function Chat() {
                   </CardContent>
                 </Card>
 
-                <ThemeSelectorBox />
+                <ThemeSelectorBox theme={theme} setTheme={setTheme} />
               </form>
             </div>
           </div>

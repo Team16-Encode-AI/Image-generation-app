@@ -12,17 +12,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 
-export function ThemeSelectorBox() {
-  const [theme, setTheme] = useState("");
-
-  // Function to handle radio input change
-  const handleThemeChange = (e) => {
-    setTheme(e.target.value);
-  };
-
+export function ThemeSelectorBox({ theme, setTheme }) {
   useEffect(() => {
     console.log(theme);
   }, [theme]); // Log the updated value of theme whenever it changes
+
+  const handleThemeChange = (e) => {
+    setTheme(e.target.value);
+  };
 
   return (
     <Card className="w-full max-w-lg mx-auto">
