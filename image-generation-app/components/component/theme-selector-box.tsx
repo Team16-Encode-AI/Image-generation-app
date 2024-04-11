@@ -10,7 +10,7 @@ import {
   Card,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 export function ThemeSelectorBox({ theme, setTheme }) {
   useEffect(() => {

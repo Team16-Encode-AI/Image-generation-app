@@ -14,7 +14,6 @@ import {
   Card,
 } from "@/components/ui/card";
 import { ThemeSelectorBox } from "@/components/component/theme-selector-box";
-import { Button } from "@/components/ui/button";
 
 const roleToColorMap: Record<Message["role"], string> = {
   system: "red",
@@ -29,10 +28,13 @@ const roleToColorMap: Record<Message["role"], string> = {
 import { useState } from "react";
 
 export default function Chat() {
-  const { status, messages, input, submitMessage, handleInputChange } =
-    useAssistant({ api: "/api/assistant" });
-
   const [theme, setTheme] = useState("");
+
+  const { status, messages, input, submitMessage, handleInputChange } =
+    useAssistant({ api: "/api/assistant", body: { theme: theme } });
+
+  // Compose the message body
+  const messageBody = `${messages} style and in ${input} subject`;
 
   return (
     <>
@@ -63,7 +65,11 @@ export default function Chat() {
                   </CardContent>
                 </Card>
 
-                <ThemeSelectorBox theme={theme} setTheme={setTheme} />
+                <ThemeSelectorBox
+                  theme={theme}
+                  setTheme={setTheme}
+                  messageBody={messageBody}
+                />
               </form>
             </div>
           </div>
@@ -91,7 +97,6 @@ export default function Chat() {
               <br />
             </div>
           ))}
-
           {status === "in_progress" && (
             <div className="h-8 w-full max-w-md p-2 mb-8 bg-gray-300 dark:bg-gray-600 rounded-lg animate-pulse" />
           )}

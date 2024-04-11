@@ -21,6 +21,7 @@ export async function POST(req: Request) {
   const input: {
     threadId: string | null;
     message: string;
+    theme: string;
   } = await req.json();
 
   // Create a thread if needed
@@ -29,14 +30,14 @@ export async function POST(req: Request) {
   // Add a message to the thread
   const createdMessage = await openai.beta.threads.messages.create(threadId, {
     role: "user",
-    content: input.message,
+    content: `${input.theme} style and in  ${input.message} subject`,
   });
 
   return experimental_AssistantResponse(
     { threadId, messageId: createdMessage.id },
     async ({ forwardStream, sendDataMessage }) => {
       // Run the assistant on the thread
-      const runStream = openai.beta.threads.runs.createAndStream(threadId, {
+      const runStream = openai.beta.threads.runs.stream(threadId, {
         assistant_id: assiistantId,
       });
 
