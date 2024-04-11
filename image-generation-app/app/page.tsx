@@ -17,10 +17,10 @@ import { ThemeSelectorBox } from "@/components/component/theme-selector-box";
 
 const roleToColorMap: Record<Message["role"], string> = {
   system: "red",
-  user: "black",
+  user: "white",
   function: "blue",
   assistant: "green",
-  data: "orange",
+  data: "white",
 };
 
 // useChat hook by default will use the POST Route handler we created (it defaults to /api/chat). You can overrider this by passing a api prop to useChat({api:''})
@@ -71,7 +71,7 @@ export default function Chat() {
           </div>
         </div>
 
-        <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch">
+        <div className="flex flex-col w-full max-w-2xl py-24 mx-auto stretch">
           {messages.map((m: Message) => (
             <div
               key={m.id}
@@ -93,6 +93,7 @@ export default function Chat() {
               <br />
             </div>
           ))}
+          {status === "awaiting_message" && <button>Generate image?</button>}
           {status === "in_progress" && (
             <div className="h-8 w-full max-w-md p-2 mb-8 bg-gray-300 dark:bg-gray-600 rounded-lg animate-pulse" />
           )}

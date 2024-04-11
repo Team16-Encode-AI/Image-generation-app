@@ -53,43 +53,6 @@ export function ThemeSelectorBox({ theme, setTheme }) {
               </label>
             </>
           ))}
-          {/* <label
-            htmlFor="classic"
-            className="has-[:checked]:bg-indigo-50 has-[:checked]:text-indigo-900 w-full py-2 px-4  flex items-center  rounded-lg font-semibold border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 focus:bg-gray-200 "
-          >
-            Classic
-            <input
-              className="hidden checked:border-indigo-500"
-              id="classic"
-              type="radio"
-              name="radio"
-              value="classic"
-              onChange={handleThemeChange}
-            />
-          </label>
-
-          <label
-            htmlFor="surreal"
-            className="has-[:checked]:bg-indigo-50 has-[:checked]:text-indigo-900 w-full py-2 px-4  flex items-center  rounded-lg font-semibold border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 "
-          >
-            Surreal
-            <input
-              className="hidden checked:border-indigo-500"
-              id="surreal"
-              type="radio"
-              name="radio"
-              value="surreal"
-              onChange={handleThemeChange}
-            />
-          </label> */}
-
-          {/*           
-          <div className="w-full py-2 px-4  flex items-center  rounded-lg font-semibold border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 ">
-            Abstract
-          </div>
-          <div className="w-full py-2 px-4  flex items-center  rounded-lg font-semibold border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 ">
-            Impressionist
-          </div> */}
         </div>
         <Button type="submit" className="self-center">
           Compose Description
