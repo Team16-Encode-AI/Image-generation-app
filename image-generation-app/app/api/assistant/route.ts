@@ -2,7 +2,7 @@ import OpenAI from "openai";
 
 import { experimental_AssistantResponse } from "ai";
 
-const assiistantId = "asst_v7SJWY1hV7v1G3dLMdq5UWc4";
+const assistantId = "asst_v7SJWY1hV7v1G3dLMdq5UWc4";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -27,14 +27,15 @@ export async function POST(req: Request) {
 
   return experimental_AssistantResponse(
     { threadId, messageId: createdMessage.id },
-    async ({ forwardStream, sendDataMessage }) => {
+    async ({ forwardStream }) => {
       // Run the assistant on the thread
       const runStream = openai.beta.threads.runs.stream(threadId, {
-        assistant_id: assiistantId,
+        assistant_id: assistantId,
       });
 
       // forward run status would stream message deltas
       let runResult = await forwardStream(runStream);
+
       console.log(runResult);
     },
   );

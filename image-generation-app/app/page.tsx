@@ -14,6 +14,7 @@ import {
   Card,
 } from "@/components/ui/card";
 import { ThemeSelectorBox } from "@/components/component/theme-selector-box";
+import { Button } from "@/components/ui/button";
 
 const roleToColorMap: Record<Message["role"], string> = {
   system: "red",
@@ -32,6 +33,9 @@ export default function Chat() {
 
   const { status, messages, input, submitMessage, handleInputChange } =
     useAssistant({ api: "/api/assistant", body: { theme: theme } });
+
+  console.log(status);
+  console.log(messages);
 
   // Compose the message body
   const messageBody = `${messages} style and in ${input} subject`;
@@ -73,30 +77,71 @@ export default function Chat() {
 
         <div className="flex flex-col w-full max-w-2xl py-24 mx-auto stretch">
           {messages.map((m: Message) => (
-            <div
-              key={m.id}
-              className="whitespace-pre-wrap"
-              style={{ color: roleToColorMap[m.role] }}
-            >
-              <strong>{`${m.role}: `}</strong>
-              {m.role !== "data" && m.content}
-              {m.role === "data" && (
-                <>
-                  {/* here you would provide a custom display for your app-specific data:*/}
-                  {(m.data as any).description}
-                  <br />
-                  <pre className={"bg-gray-200"}>
-                    {JSON.stringify(m.data, null, 2)}
-                  </pre>
-                </>
-              )}
-              <br />
-            </div>
+            <>
+              <div
+                key={m.id}
+                className="whitespace-pre-wrap"
+                style={{ color: roleToColorMap[m.role] }}
+              >
+                <strong>{`${m.role}: `}</strong>
+                {m.role !== "data" && m.content}
+                {m.role === "data" && (
+                  <>
+                    {/* here you would provide a custom display for your app-specific data:*/}
+                    {(m.data as any).description}
+                    <br />
+                    <pre className={"bg-gray-200"}>
+                      {JSON.stringify(m.data, null, 2)}
+                    </pre>
+                  </>
+                )}
+                <br />
+              </div>
+            </>
           ))}
-          {status === "awaiting_message" && <button>Generate image?</button>}
+
+          {/* <Button type="submit" className="self-center">
+            Generate Image?
+          </Button> */}
           {status === "in_progress" && (
             <div className="h-8 w-full max-w-md p-2 mb-8 bg-gray-300 dark:bg-gray-600 rounded-lg animate-pulse" />
           )}
+
+          <CardContent className="flex flex-col gap-4">
+            <div className=" grid gap-4 md:grid-cols-2" role="group">
+              <label
+                htmlFor="button_1"
+                className="has-[:checked]:bg-indigo-50 has-[:checked]:text-indigo-900 w-full py-2 px-4  flex items-center  rounded-lg font-semibold border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 focus:bg-gray-200 "
+              >
+                Button_1
+                <input
+                  className="hidden checked:border-indigo-500"
+                  id="button_1"
+                  type="radio"
+                  name="radio"
+                  value="button_1"
+                />
+              </label>
+            </div>
+            <div className=" grid gap-4 md:grid-cols-2" role="group">
+              <label
+                htmlFor="button_2"
+                className="has-[:checked]:bg-indigo-50 has-[:checked]:text-indigo-900 w-full py-2 px-4  flex items-center  rounded-lg font-semibold border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 focus:bg-gray-200 "
+              >
+                Button_1
+                <input
+                  className="hidden checked:border-indigo-500"
+                  id="button_2"
+                  type="radio"
+                  name="radio"
+                  value="button_2"
+                />
+              </label>
+            </div>
+            <Button type="submit" className="self-center">
+              Generate Image
+            </Button>
+          </CardContent>
         </div>
       </main>
     </>
