@@ -65,11 +65,7 @@ export default function Chat() {
                   </CardContent>
                 </Card>
 
-                <ThemeSelectorBox
-                  theme={theme}
-                  setTheme={setTheme}
-                  messageBody={messageBody}
-                />
+                <ThemeSelectorBox theme={theme} setTheme={setTheme} />
               </form>
             </div>
           </div>

@@ -12,6 +12,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 
+const styles = ["Classic", "Surreal", "Abstract", "Impressionist"];
+
 export function ThemeSelectorBox({ theme, setTheme }) {
   useEffect(() => {
     console.log(theme);
@@ -29,9 +31,29 @@ export function ThemeSelectorBox({ theme, setTheme }) {
           Choose a theme for the painting.
         </CardDescription>
       </CardHeader>
+
       <CardContent className="flex flex-col gap-4">
         <div className=" grid gap-4 md:grid-cols-2" role="group">
-          <label
+          {styles.map((style) => (
+            <>
+              <label
+                key={style}
+                htmlFor={style}
+                className="has-[:checked]:bg-indigo-50 has-[:checked]:text-indigo-900 w-full py-2 px-4  flex items-center  rounded-lg font-semibold border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 focus:bg-gray-200 "
+              >
+                {style}
+                <input
+                  className="hidden checked:border-indigo-500"
+                  id={style}
+                  type="radio"
+                  name="radio"
+                  value={style}
+                  onChange={handleThemeChange}
+                />
+              </label>
+            </>
+          ))}
+          {/* <label
             htmlFor="classic"
             className="has-[:checked]:bg-indigo-50 has-[:checked]:text-indigo-900 w-full py-2 px-4  flex items-center  rounded-lg font-semibold border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 focus:bg-gray-200 "
           >
@@ -59,7 +81,7 @@ export function ThemeSelectorBox({ theme, setTheme }) {
               value="surreal"
               onChange={handleThemeChange}
             />
-          </label>
+          </label> */}
 
           {/*           
           <div className="w-full py-2 px-4  flex items-center  rounded-lg font-semibold border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 ">
