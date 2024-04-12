@@ -22,23 +22,34 @@ const roleToColorMap: Record<Message["role"], string> = {
   function: "blue",
   assistant: "green",
   data: "white",
+  tool: "",
 };
 
 // useChat hook by default will use the POST Route handler we created (it defaults to /api/chat). You can overrider this by passing a api prop to useChat({api:''})
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Chat() {
   const [theme, setTheme] = useState("");
+  const [finalAssistantMessage, setFinalAssistantMessage] = useState("");
 
   const { status, messages, input, submitMessage, handleInputChange } =
     useAssistant({ api: "/api/assistant", body: { theme: theme } });
 
-  console.log(status);
-  console.log(messages);
+  // console.log(messages);
+  console.log("Latest Assistant Message:", finalAssistantMessage);
 
-  // Compose the message body
-  const messageBody = `${messages} style and in ${input} subject`;
+  useEffect(() => {
+    // Find the latest assistant message
+    const lastAssistantMessage = messages
+      .filter((m) => m.role === "assistant")
+      .pop();
+
+    // If there's a new assistant message, update the state
+    if (lastAssistantMessage) {
+      setFinalAssistantMessage(lastAssistantMessage.content);
+    }
+  }, [messages]); // Effect reruns whenever the messages array changes
 
   return (
     <>
@@ -100,9 +111,6 @@ export default function Chat() {
             </>
           ))}
 
-          {/* <Button type="submit" className="self-center">
-            Generate Image?
-          </Button> */}
           {status === "in_progress" && (
             <div className="h-8 w-full max-w-md p-2 mb-8 bg-gray-300 dark:bg-gray-600 rounded-lg animate-pulse" />
           )}
@@ -128,7 +136,7 @@ export default function Chat() {
                 htmlFor="button_2"
                 className="has-[:checked]:bg-indigo-50 has-[:checked]:text-indigo-900 w-full py-2 px-4  flex items-center  rounded-lg font-semibold border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 focus:bg-gray-200 "
               >
-                Button_1
+                Button_2
                 <input
                   className="hidden checked:border-indigo-500"
                   id="button_2"
