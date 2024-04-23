@@ -6,6 +6,8 @@ import {
   experimental_useAssistant as useAssistant,
 } from "ai/react";
 
+import axios from "axios";
+
 import {
   CardTitle,
   CardDescription,
@@ -32,11 +34,48 @@ import { useState, useEffect } from "react";
 export default function Chat() {
   const [theme, setTheme] = useState("");
   const [finalAssistantMessage, setFinalAssistantMessage] = useState("");
-
+  const [imageUrl, setImageUrl] = useState(null);
   const { status, messages, input, submitMessage, handleInputChange } =
-    useAssistant({ api: "/api/assistant", body: { theme: theme } });
+    useAssistant({ api: "api/assistant", body: { theme: theme } });
 
-  // console.log(messages);
+  async function handleImageGeneration() {
+    const numImages = 2;
+    const promptMessage = finalAssistantMessage;
+
+    try {
+      const response = await fetch("/api/dalle", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ numImages, promptMessage }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setImageUrl(data.imageUrls);
+    } catch (error) {
+      console.error("Failed to generate image:", error);
+    }
+  }
+
+  //below works
+  // async function handleImageGeneration() {
+  //   try {
+  //     const response = await fetch("/api/dalle");
+  //     if (!response.ok) {
+  //       throw new Error(`HTTP error! status: ${response.status}`);
+  //     }
+  //     const data = await response.json();
+  //     setImageUrl(data.imageUrl);
+  //   } catch (error) {
+  //     console.error("Failed to generate image:", error);
+  //   }
+  // }
+
   console.log("Latest Assistant Message:", finalAssistantMessage);
 
   useEffect(() => {
@@ -53,7 +92,7 @@ export default function Chat() {
 
   return (
     <>
-      <main className="mx-auto w-full p-24 flex flex-row">
+      <main className="mx-auto w-full p-24 flex flex-rows">
         <div className="p4 m-4">
           <div className="flex flex-col items-center justify-center space-y-8 text-white">
             <div className="space-y-2">
@@ -115,19 +154,19 @@ export default function Chat() {
             <div className="h-8 w-full max-w-md p-2 mb-8 bg-gray-300 dark:bg-gray-600 rounded-lg animate-pulse" />
           )}
 
-          <CardContent className="flex flex-col gap-4">
+          <CardContent className="flex flex-rows gap-4">
             <div className=" grid gap-4 md:grid-cols-2" role="group">
               <label
                 htmlFor="button_1"
                 className="has-[:checked]:bg-indigo-50 has-[:checked]:text-indigo-900 w-full py-2 px-4  flex items-center  rounded-lg font-semibold border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 focus:bg-gray-200 "
               >
-                Button_1
+                1
                 <input
                   className="hidden checked:border-indigo-500"
                   id="button_1"
                   type="radio"
                   name="radio"
-                  value="button_1"
+                  value="1"
                 />
               </label>
             </div>
@@ -136,19 +175,31 @@ export default function Chat() {
                 htmlFor="button_2"
                 className="has-[:checked]:bg-indigo-50 has-[:checked]:text-indigo-900 w-full py-2 px-4  flex items-center  rounded-lg font-semibold border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 focus:bg-gray-200 "
               >
-                Button_2
+                2
                 <input
                   className="hidden checked:border-indigo-500"
                   id="button_2"
                   type="radio"
                   name="radio"
-                  value="button_2"
+                  value="2"
                 />
               </label>
             </div>
-            <Button type="submit" className="self-center">
+            <Button onClick={handleImageGeneration} className="self-center">
               Generate Image
             </Button>
+
+            {imageUrl && (
+              <div>
+                {imageUrl.map((url, index) => (
+                  <img
+                    key={index}
+                    src={url}
+                    alt={`Generated Image ${index + 1}`}
+                  />
+                ))}
+              </div>
+            )}
           </CardContent>
         </div>
       </main>
